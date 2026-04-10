@@ -3,9 +3,10 @@
 // import { useAuth } from "../context/AuthContext";
 // import GlassBackground from "../components/GlassBackground";
 // import Navbar from "../components/Navbar";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useAuth} from "../context/AuthContext";
+import { setTasks } from "../redux/taskSlice";
 import GlassBackground from "../components/GlassBackground";
 import Navbar from "../components/Navbar";
 const AISuggestions = () => {
@@ -15,102 +16,143 @@ const AISuggestions = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const pending = tasks.filter((t) => !t.completed);
-  const completed = tasks.filter((t) => t.completed);
+  const dispatch = useDispatch();
 
-  const getAISuggestions = async () => {
-    if (tasks.length === 0) {
-      setError("Please add some tasks first before getting AI suggestions!");
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    setSuggestions(null);
-    
-    
-
-    const taskSummary = pending.map((t) =>
-      `- "${t.title}" (Subject: ${t.subject}, Priority: ${t.priority}, Deadline: ${t.deadline})`
-    ).join("\n");
-
-    const completedSummary = completed.length > 0
-      ? `Completed tasks: ${completed.map(t => t.title).join(", ")}`
-      : "No completed tasks yet.";
-
-    const prompt = `You are a helpful AI study assistant for a student workload management app.
-
-Here are the student's current pending tasks:
-${taskSummary}
-
-${completedSummary}
-
-Based on this workload, provide a personalized study plan in the following JSON format only (no extra text):
-{
-  "greeting": "A short encouraging greeting for the student",
-  "priority_order": ["task title 1", "task title 2", "task title 3"],
-  "daily_plan": [
-    { "day": "Today", "focus": "What to focus on today", "tasks": ["task1", "task2"] },
-    { "day": "Tomorrow", "focus": "What to focus on tomorrow", "tasks": ["task1"] },
-    { "day": "This Week", "focus": "What to finish this week", "tasks": ["task1"] }
-  ],
-  "tips": [
-    "Study tip 1 relevant to their subjects",
-    "Study tip 2",
-    "Study tip 3"
-  ],
-  "warning": "Any deadline warning if tasks are overdue or close to deadline (or null if none)"
-}`;
-
-    try {
-      const API_KEY = "AIzaSyBfBtJqul5nde3cRf-3MPrbyGc9cX48cLM"; 
-      const response = await fetch(
-   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY,
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-    }),
+useEffect(() => {
+  if (!user) return;
+  const stored = localStorage.getItem(`tasks_${user.uid}`);
+  if (stored) {
+    dispatch(setTasks(JSON.parse(stored)));
   }
-);
-const data = await response.json();
-console.log("Full data:", JSON.stringify(data))
-console.log("Gemini response:", data);
-const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-console.log("Text:", text);
+}, [user]);
 
-if (!text) {
-  setError("AI returned empty response. Please try again.");
-  return;
-}
+const pending = tasks.filter((t) => !t.completed);
+const completed = tasks.filter((t) => t.completed);
 
-const clean = text
-  .replace(/```json/g, "")
-  .replace(/```/g, "")
-  .trim();
+ 
+//   const getAISuggestions = async () => {
+//     if (tasks.length === 0) {
+//       setError("Please add some tasks first before getting AI suggestions!");
+//       return;
+//     }
 
-try {
-  const parsed = JSON.parse(clean);
-  setSuggestions(parsed);
-} catch (parseErr) {
-  console.error("Parse error:", parseErr);
-  console.error("Raw text:", text);
-  setError("AI response format error. Please try again.");
-}
+//     setLoading(true);
+//     setError(null);
+//     setSuggestions(null);
+    
+//     const taskSummary = pending.map((t) =>
+//   "- " + t.title + " (Subject: " + t.subject + ", Priority: " + t.priority + ", Deadline: " + t.deadline + ")"
+// ).join("\n");
+
+// const completedSummary = completed.length > 0
+//   ? "Completed tasks: " + completed.map(t => t.title).join(", ")
+//   : "No completed tasks yet.";
+
+    
+//     const prompt = `You are a helpful AI study assistant for a student workload management app.
+
+// Here are the student's current pending tasks:
+// ${taskSummary}
+
+// ${completedSummary}
+
+// Based on this workload, provide a personalized study plan in the following JSON format only (no extra text):
+// {
+//   "greeting": "A short encouraging greeting for the student",
+//   "priority_order": ["task title 1", "task title 2", "task title 3"],
+//   "daily_plan": [
+//     { "day": "Today", "focus": "What to focus on today", "tasks": ["task1", "task2"] },
+//     { "day": "Tomorrow", "focus": "What to focus on tomorrow", "tasks": ["task1"] },
+//     { "day": "This Week", "focus": "What to finish this week", "tasks": ["task1"] }
+//   ],
+//   "tips": [
+//     "Study tip 1 relevant to their subjects",
+//     "Study tip 2",
+//     "Study tip 3"
+//   ],
+//   "warning": "Any deadline warning if tasks are overdue or close to deadline (or null if none)"
+// }`;
+
+//     try {
+//       const API_KEY = "AIzaSyBfBtJqul5nde3cRf-3MPrbyGc9cX48cLM"; 
+//       const response = await fetch(
+//    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY,
+//   {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       contents: [{ parts: [{ text: prompt }] }],
+//     }),
+//   }
+// );
+// const data = await response.json();
+// console.log("Full data:", JSON.stringify(data))
+// console.log("Gemini response:", data);
+// const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+// console.log("Text:", text);
+
+// if (!text) {
+//   setError("AI returned empty response. Please try again.");
+//   return;
+// }
+
+// const clean = text
+//   .replace(/```json/g, "")
+//   .replace(/```/g, "")
+//   .trim();
+
+// try {
+//   const parsed = JSON.parse(clean);
+//   setSuggestions(parsed);
+// } catch (parseErr) {
+//   console.error("Parse error:", parseErr);
+//   console.error("Raw text:", text);
+//   setError("AI response format error. Please try again.");
+// }
 
      
-    } catch (err) {
-  console.error("Full error:", err);
-  console.error("Error message:", err.message);
-  setError(`Error: ${err.message}`);
-}
-     finally {
-      setLoading(false);
-    }
-  };
+//     } catch (err) {
+//   console.error("Full error:", err);
+//   console.error("Error message:", err.message);
+//   setError(`Error: ${err.message}`);
+// }
+//      finally {
+//       setLoading(false);
+//     }
+//   };
+
+const getAISuggestions = async () => {
+  if (tasks.length === 0) {
+    setError("Please add some tasks first!");
+    return;
+  }
+  setLoading(true);
+  setError(null);
+  setSuggestions(null);
+
+  await new Promise((res) => setTimeout(res, 2000));
+
+  setSuggestions({
+    greeting: "You have " + pending.length + " pending tasks. Let's make a smart plan!",
+    priority_order: pending.slice(0, 3).map(t => t.title),
+    daily_plan: [
+      { day: "Today", focus: "Focus on high priority tasks", tasks: pending.filter(t => t.priority === "High").map(t => t.title).slice(0, 2) },
+      { day: "Tomorrow", focus: "Work on medium priority tasks", tasks: pending.filter(t => t.priority === "Medium").map(t => t.title).slice(0, 2) },
+      { day: "This Week", focus: "Complete remaining tasks", tasks: pending.filter(t => t.priority === "Low").map(t => t.title).slice(0, 2) },
+    ],
+    tips: [
+      "Use Pomodoro technique — study 25 mins, break 5 mins",
+      "Tackle your hardest subject when your energy is highest",
+      "Review notes within 24 hours to boost retention by 60%",
+    ],
+    warning: pending.length > 3 ? "You have many pending tasks! Start with high priority ones immediately." : null,
+  });
+
+  setLoading(false);
+};
+
 
   return (
     <div className="ai-page">

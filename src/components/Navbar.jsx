@@ -39,9 +39,9 @@ const Navbar = () => {
           </li>
           <li>
           <NavLink to="/ai" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-           <span className="nav-icon">🤖</span> AI Tips
+           <span className="nav-icon">🤖</span> AI_Tips
           </NavLink>
-        y</li>
+        </li>
         </ul>
 
         <div className="nav-right">
