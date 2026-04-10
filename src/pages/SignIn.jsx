@@ -1,9 +1,3 @@
-// import { useState } from "react";
-// import { signInWithEmailAndPassword } from "firebase/auth";
-// import { useNavigate } from "react-router-dom";
-// import { auth } from "../firebase/FireBaseConfig";
-// import GlassBackground from "../components/GlassBackground";
-
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -26,8 +20,7 @@ const SignIn = () => {
 
   return (
   <div className="home-container">
-    <GlassBackground/>  {/* ← replaces <video> + <div className="overlay"> */}
-      {/* <div className="overlay" /> */}
+    <GlassBackground/>  
       <div className="home-box">
         <p style={{
     fontSize: "0.8rem",
@@ -46,12 +39,7 @@ const SignIn = () => {
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        {/* <input
-          type="password"
-          className="form-control mb-4"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        /> */}
+      
       
 <div style={{ position: "relative" }}>
   <input

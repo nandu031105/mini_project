@@ -1,14 +1,3 @@
-// import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-// import SignUp from "./pages/SignUp";
-// import SignIn from "./pages/SignIn";
-// import Home from "./pages/Home";
-// import Tasks from "./pages/Tasks";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import { useAuth } from "./context/AuthContext";
-// import "./App.css";
-// import Progress from "./pages/Progress";
-// import AISuggestions from "./pages/AISuggestions";
-
 import { BrowserRouter , Routes, Route, Navigate} from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";

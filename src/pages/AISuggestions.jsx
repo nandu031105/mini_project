@@ -1,8 +1,3 @@
-// import { useState } from "react";
-// import { useSelector } from "react-redux";
-// import { useAuth } from "../context/AuthContext";
-// import GlassBackground from "../components/GlassBackground";
-// import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth} from "../context/AuthContext";
@@ -28,100 +23,6 @@ useEffect(() => {
 
 const pending = tasks.filter((t) => !t.completed);
 const completed = tasks.filter((t) => t.completed);
-
- 
-//   const getAISuggestions = async () => {
-//     if (tasks.length === 0) {
-//       setError("Please add some tasks first before getting AI suggestions!");
-//       return;
-//     }
-
-//     setLoading(true);
-//     setError(null);
-//     setSuggestions(null);
-    
-//     const taskSummary = pending.map((t) =>
-//   "- " + t.title + " (Subject: " + t.subject + ", Priority: " + t.priority + ", Deadline: " + t.deadline + ")"
-// ).join("\n");
-
-// const completedSummary = completed.length > 0
-//   ? "Completed tasks: " + completed.map(t => t.title).join(", ")
-//   : "No completed tasks yet.";
-
-    
-//     const prompt = `You are a helpful AI study assistant for a student workload management app.
-
-// Here are the student's current pending tasks:
-// ${taskSummary}
-
-// ${completedSummary}
-
-// Based on this workload, provide a personalized study plan in the following JSON format only (no extra text):
-// {
-//   "greeting": "A short encouraging greeting for the student",
-//   "priority_order": ["task title 1", "task title 2", "task title 3"],
-//   "daily_plan": [
-//     { "day": "Today", "focus": "What to focus on today", "tasks": ["task1", "task2"] },
-//     { "day": "Tomorrow", "focus": "What to focus on tomorrow", "tasks": ["task1"] },
-//     { "day": "This Week", "focus": "What to finish this week", "tasks": ["task1"] }
-//   ],
-//   "tips": [
-//     "Study tip 1 relevant to their subjects",
-//     "Study tip 2",
-//     "Study tip 3"
-//   ],
-//   "warning": "Any deadline warning if tasks are overdue or close to deadline (or null if none)"
-// }`;
-
-//     try {
-//       const API_KEY = "AIzaSyBfBtJqul5nde3cRf-3MPrbyGc9cX48cLM"; 
-//       const response = await fetch(
-//    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY,
-//   {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       contents: [{ parts: [{ text: prompt }] }],
-//     }),
-//   }
-// );
-// const data = await response.json();
-// console.log("Full data:", JSON.stringify(data))
-// console.log("Gemini response:", data);
-// const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-// console.log("Text:", text);
-
-// if (!text) {
-//   setError("AI returned empty response. Please try again.");
-//   return;
-// }
-
-// const clean = text
-//   .replace(/```json/g, "")
-//   .replace(/```/g, "")
-//   .trim();
-
-// try {
-//   const parsed = JSON.parse(clean);
-//   setSuggestions(parsed);
-// } catch (parseErr) {
-//   console.error("Parse error:", parseErr);
-//   console.error("Raw text:", text);
-//   setError("AI response format error. Please try again.");
-// }
-
-     
-//     } catch (err) {
-//   console.error("Full error:", err);
-//   console.error("Error message:", err.message);
-//   setError(`Error: ${err.message}`);
-// }
-//      finally {
-//       setLoading(false);
-//     }
-//   };
 
 const getAISuggestions = async () => {
   if (tasks.length === 0) {

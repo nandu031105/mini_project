@@ -1,9 +1,3 @@
-// import GlassBackground from "../components/GlassBackground";
-// import { useState } from "react";
-// import { createUserWithEmailAndPassword, signOut , updateProfile } from "firebase/auth";
-// import { useNavigate } from "react-router-dom";
-// import { auth } from "../firebase/FireBaseConfig";
-
 import GlassBackground from "../components/GlassBackground";
 import { useState } from "react";
 import { createUserWithEmailAndPassword,signOut,updateProfile } from "firebase/auth";
@@ -17,24 +11,7 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   // const [error,setError] = useState("")
   const navigate = useNavigate();
-  // function validate(){
-  //   if (!email.includes('@')){
-  //     setError("must include @")
-  //     return false
-  //   }
-  //   if(password.length<5){
-  //     setError("must include more than 5 characters ")
-  //     return false
-  //   }
-  //   setError("")
-  //   return true
-  // }
-  //  const handleChange = (e)=>{
-  //   e.preventDefault()
-  //   if(validate()){
-  //     alert(`hello $`)
-  //   }
-  //  }
+  
   const handleSignup = async () => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);

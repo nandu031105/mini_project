@@ -1,10 +1,4 @@
-// import { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { setTasks, setLoading } from "../redux/taskSlice";
 import { useAuth } from "../context/AuthContext";
-// import GlassBackground from "../components/GlassBackground";
-// import Navbar from "../components/Navbar";
-
 import { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setTasks} from "../redux/taskSlice"

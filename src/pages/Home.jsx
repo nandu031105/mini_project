@@ -1,8 +1,3 @@
-// import { useAuth } from "../context/AuthContext";
-// import { useNavigate } from "react-router-dom";
-// import GlassBackground from "../components/GlassBackground";
-// import Navbar from "../components/Navbar";
-
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import GlassBackground from "../components/GlassBackground";
@@ -45,8 +40,6 @@ const Home = () => {
 
   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
   const userName = user?.displayName ;
-  // || user?.email?.split("@")[0];
-
   return (
     <div className="home-page">
       <GlassBackground />
@@ -71,7 +64,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ── How to Use ── */}
+  
         <div className="section-header">
           <h2 className="section-title">How to Use StudySync AI</h2>
           <p className="section-sub">Everything you need in 4 simple steps</p>
