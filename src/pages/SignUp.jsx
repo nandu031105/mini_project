@@ -97,15 +97,14 @@ const SignUp = () => {
         }}>
         Already have an account?{" "}
         <span
-           onClick={() => navigate("/signin")}
-       style={{
-         color: "#7eb3ff",
-         cursor: "pointer",
-         fontWeight: 600,
-         transition: "color 0.2s"
-        }}
-       onMouseEnter={e => e.target.style.color = "#fff"}
-       onMouseLeave={e => e.target.style.color = "#7eb3ff"}>Sign In</span>
+           onClick={async () => {
+             await signOut(auth);
+             navigate("/signin");
+           }}
+        style={{ color: "#7eb3ff", cursor: "pointer", fontWeight: 600 }}
+      >
+        Sign In
+      </span>
       </p>
     </div>
     </div>

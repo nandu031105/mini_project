@@ -196,6 +196,12 @@ const getAISuggestions = async () => {
           padding: 110px 24px 80px;
         }
 
+      @media (max-width: 640px) {
+         .ai-content {
+         padding: 100px 16px 60px;
+        }
+      }
+
         /* ── Header ── */
         .ai-header {
           text-align: center;
