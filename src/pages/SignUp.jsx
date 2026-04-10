@@ -42,16 +42,20 @@ const SignUp = () => {
     📚 StudySync AI
   </p>
         <h2 className="welcome-title text-primary">Sign Up</h2>
-        <input
+<input
   type="text"
   className="form-control mb-3"
   placeholder="Username"
+  autoComplete="off"
+  name="username"
   onChange={(e) => setUserName(e.target.value)}
 />
         <input
           type="email"
           className="form-control mb-3"
           placeholder=" enter Email"
+          autoComplete="email"
+          name="email"
           onChange={(e) => setEmail(e.target.value)}
         />
         
@@ -60,6 +64,8 @@ const SignUp = () => {
     type={showPassword ? "text" : "password"}
     className="form-control mb-4"
     placeholder="Password"
+    autoComplete="new-password"
+    name="password"
     onChange={(e) => setPassword(e.target.value)}
     style={{ paddingRight: "45px" }}
   />
