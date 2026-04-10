@@ -18,6 +18,8 @@ useEffect(() => {
   const stored = localStorage.getItem(`tasks_${user.uid}`);
   if (stored) {
     dispatch(setTasks(JSON.parse(stored)));
+  }else{
+    dispatch(setTasks([]));
   }
 }, [user]);
 

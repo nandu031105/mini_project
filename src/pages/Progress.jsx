@@ -14,11 +14,15 @@ const Progress = () => {
   const [animated, setAnimated] = useState(false);
 
   // ── Load tasks from localStorage ──
-  useEffect(() => {
+ useEffect(() => {
     if (!user) return;
     const stored = localStorage.getItem(`tasks_${user.uid}`);
-    if (stored) dispatch(setTasks(JSON.parse(stored)));
-    setTimeout(() => setAnimated(true), 100);
+    if (stored){
+       dispatch(setTasks(JSON.parse(stored)));
+    }else{
+      dispatch(setTasks([]));
+    }
+    setTimeout(()  => setAnimated(true), 100);
   }, [user]);
 
   // ── Stats ──
