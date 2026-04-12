@@ -2,7 +2,7 @@ import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
-  apiKey: "AIzaSyDPG0W3ndsgn1ozpAITycXptxuyieK_aGE",
+  apiKey: import.meta.env.VITE_API_KEY,
   authDomain: "authexample-19c32.firebaseapp.com",
   projectId: "authexample-19c32",
   storageBucket: "authexample-19c32.firebasestorage.app",
